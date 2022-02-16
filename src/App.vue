@@ -4,19 +4,26 @@
 
     <ul class="lista-fotos">
       <li class="lista-fotos-item" v-for="foto of fotos" :key="foto.titulo">
-        <div class="painel">
-          <h2 class="painel-titulo">{{ foto.titulo }}</h2>
-          <div class="painel-conteudo">
-            <img class="imagem-responsiva" :src="foto.url" :alt="foto.titulo" />
-          </div>
-        </div>
+
+        <meu-painel :titulo="foto.titulo">
+            <img slot="painel" class="imagem-responsiva" :src="foto.url" :alt="foto.titulo" />
+        </meu-painel>
+
       </li>
     </ul>
+
   </div>
 </template>
 
 <script>
+import Painel from './components/shared/painel/Painel.vue';
+
 export default {
+
+  components: {
+    'meu-painel' : Painel
+  },
+
   data() {
     return {
       titulo: "fotos no vue",

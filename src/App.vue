@@ -5,7 +5,7 @@
     <input
       type="search"
       class="filtro"
-      v-on:input="filtro = $event.target.value"
+      @input="filtro = $event.target.value"
       placeholder="filtre por parte do titulo"
     />
     {{ filtro }}
@@ -16,12 +16,7 @@
         :key="foto.titulo"
       >
         <meu-painel :titulo="foto.titulo">
-          <img
-            slot="painel"
-            class="imagem-responsiva"
-            :src="foto.url"
-            :alt="foto.titulo"
-          />
+          <imagem-responsiva :url="foto.url" :titulo="foto.titulo" slot="painel"></imagem-responsiva>
         </meu-painel>
       </li>
     </ul>
@@ -30,10 +25,12 @@
 
 <script>
 import Painel from "./components/shared/painel/Painel.vue";
+import ImagemResponsiva from "./components/shared/imagem-responsiva/imagemResponsiva.vue"
 
 export default {
   components: {
-    "meu-painel": Painel
+    "meu-painel": Painel,
+    "imagem-responsiva" : ImagemResponsiva,
   },
 
   data() {

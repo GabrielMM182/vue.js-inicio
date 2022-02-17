@@ -15,31 +15,41 @@
         v-for="foto of fotosComFiltro"
         :key="foto.titulo"
       >
-      <div>
-        <meu-painel :titulo="foto.titulo">
-          <imagem-responsiva :url="foto.url" :titulo="foto.titulo" slot="painel"/>
-          <!-- <meu-botao :tipo="button" :rotulo="remover" slot="botao"/> -->
-        </meu-painel>
         <div>
-          <meu-botao tipo="button" rotulo="REMOVER" slot="botao" @botaoAtivado="remove($event, foto)"/>
-
+          <meu-painel :titulo="foto.titulo">
+            <imagem-responsiva
+              :url="foto.url"
+              :titulo="foto.titulo"
+              slot="painel"
+            />
+            <!-- <meu-botao :tipo="button" :rotulo="remover" slot="botao"/> -->
+          </meu-painel>
+          <div>
+            <meu-botao
+              tipo="button"
+              rotulo="REMOVER"
+              slot="botao"
+              @botaoAtivado="remove($event, foto)"
+              :confirmacao="true"
+              estilo="perigo"
+            />
+          </div>
         </div>
-      </div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import Painel from "../shared/painel/Painel.vue"
-import ImagemResponsiva from "../shared/imagem-responsiva/imagemResponsiva.vue"
-import Botao from "../shared/botao/Botao.vue"
+import Painel from "../shared/painel/Painel.vue";
+import ImagemResponsiva from "../shared/imagem-responsiva/imagemResponsiva.vue";
+import Botao from "../shared/botao/Botao.vue";
 
 export default {
   components: {
     "meu-painel": Painel,
-    "imagem-responsiva" : ImagemResponsiva,
-    "meu-botao": Botao,
+    "imagem-responsiva": ImagemResponsiva,
+    "meu-botao": Botao
   },
 
   data() {
@@ -51,12 +61,10 @@ export default {
   },
 
   methods: {
-
-     remove($event, foto) {
-        alert($event);
-        alert('removendo a foto!' + foto.titulo);
+    remove($event, foto) {
+      alert($event);
+      alert("removendo a foto!" + foto.titulo);
     }
-
   },
 
   computed: {

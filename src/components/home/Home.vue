@@ -18,9 +18,11 @@
         <div>
           <meu-painel :titulo="foto.titulo">
             <imagem-responsiva
+              v-meu-transform.animate.reverse="15"
               :url="foto.url"
               :titulo="foto.titulo"
               slot="painel"
+
             />
             <!-- <meu-botao :tipo="button" :rotulo="remover" slot="botao"/> -->
           </meu-painel>

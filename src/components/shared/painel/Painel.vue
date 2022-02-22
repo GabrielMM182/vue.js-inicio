@@ -61,6 +61,10 @@ export default {
 .painel-fade-enter-active, .painel-fade-leave-active {
   transition: opacity .4s
 }
+
+.painel-conteudo {
+  overflow: hidden;
+}
 </style>
 
 painel-fade-enter // antes do elemento ser incluído ou removido, o estado atual

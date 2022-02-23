@@ -2,6 +2,7 @@
   <div>
     <h1 class="centralizado">{{ titulo }}</h1>
 
+    <p v-show="mensagem" class="centralizado">{{ mensagem }}</p>
     <input
       type="search"
       class="filtro"
@@ -58,14 +59,27 @@ export default {
     return {
       titulo: "fotos no vue",
       fotos: [],
-      filtro: ""
+      filtro: "",
+      mensagem: ""
     };
   },
 
   methods: {
-    remove($event, foto) {
-      alert($event);
-      alert("removendo a foto!" + foto.titulo);
+
+    remove(foto) {
+      this.$http
+        .delete(`v1/fotos/${foto._id}`)
+        .then(
+          () => {
+            let indice = this.fotos.indexOf(foto); // acha a posição da foto na lista
+            this.fotos.splice(indice, 1); // a instrução altera o array
+            this.mensagem = 'Foto removida com sucesso'
+          },
+          err => {
+            this.mensagem = 'Não foi possível remover a foto';
+            console.log(err);
+          }
+        )
     }
   },
 
@@ -82,9 +96,9 @@ export default {
 
   created() {
     this.$http
-      .get("http://localhost:3000/v1/fotos")
+      .get('v1/fotos')
       .then(res => res.json())
-      .then(lista_fotos => (this.fotos = lista_fotos));
+      .then(lista_fotos => (this.fotos = lista_fotos, err => console.log(err)));
   }
 };
 </script>

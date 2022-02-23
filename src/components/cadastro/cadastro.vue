@@ -37,7 +37,7 @@
 
       <div class="centralizado">
         <meu-botao rotulo="GRAVAR" tipo="submit" estilo="padrao" />
-        <router-link to="/"
+        <router-link :to="{name: 'home'}"
           ><meu-botao rotulo="VOLTAR" tipo="button" estilo="perigo"
         /></router-link>
       </div>
@@ -49,6 +49,7 @@
 import ImagemResponsiva from "../shared/imagem-responsiva/imagemResponsiva.vue";
 import Botao from "../shared/botao/Botao.vue";
 import Foto from "../../model/Foto";
+import FotoService from "../../service/FotoService";
 
 export default {
   components: {
@@ -58,16 +59,25 @@ export default {
 
   data() {
     return {
-      foto: new Foto()
+      foto: new Foto(),
     };
   },
 
   methods: {
 
     grava() {
-      this.$http.post('v1/fotos', this.foto)
-      .then(() => this.foto = new Foto() ,err => console.log(err))
+      //primeira maneira sem o service e sem o create
+      // this.$http.post('v1/fotos', this.foto)
+      // .then(() => this.foto = new Foto() ,err => console.log(err))
+
+      this.service.cadastra(this.foto)
+        .then(() => this.foto = new Foto(), err => console.log(err));
+    },
+
+    create() {
+      this.service = new FotoService(this.$resource);
     }
+
   }
 
 };

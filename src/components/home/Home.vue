@@ -47,6 +47,7 @@
 import Painel from "../shared/painel/Painel.vue";
 import ImagemResponsiva from "../shared/imagem-responsiva/imagemResponsiva.vue";
 import Botao from "../shared/botao/Botao.vue";
+import FotoService from "../../service/FotoService.js";
 
 export default {
   components: {
@@ -66,13 +67,14 @@ export default {
 
   methods: {
 
+
+
     remove(foto) {
-      this.$http
-        .delete(`v1/fotos/${foto._id}`)
-        .then(
-          () => {
-            let indice = this.fotos.indexOf(foto); // acha a posição da foto na lista
-            this.fotos.splice(indice, 1); // a instrução altera o array
+
+      this.service.apaga(foto._id)
+        .then(() => {
+            let indice = this.fotos.indexOf(foto);
+            this.fotos.splice(indice, 1);
             this.mensagem = 'Foto removida com sucesso'
           },
           err => {
@@ -80,6 +82,20 @@ export default {
             console.log(err);
           }
         )
+
+      // this.$http
+      //   .delete(`v1/fotos/${foto._id}`)
+      //   .then(
+      //     () => {
+      //       let indice = this.fotos.indexOf(foto); // acha a posição da foto na lista
+      //       this.fotos.splice(indice, 1); // a instrução altera o array
+      //       this.mensagem = 'Foto removida com sucesso'
+      //     },
+      //     err => {
+      //       this.mensagem = 'Não foi possível remover a foto';
+      //       console.log(err);
+      //     }
+      //   )
     }
   },
 
@@ -95,10 +111,22 @@ export default {
   },
 
   created() {
-    this.$http
-      .get('v1/fotos')
-      .then(res => res.json())
+
+    this.service = new FotoService(this.$resource);
+    this.service.lista()
       .then(lista_fotos => (this.fotos = lista_fotos, err => console.log(err)));
+
+
+    // primeira maneira com http sem o service
+    // this.$http.get('v1/fotos')
+      // .then(res => res.json())
+      // .then(lista_fotos => (this.fotos = lista_fotos, err => console.log(err)));
+
+    // segunda maneira com resource sem o service
+      // this.resource = this.$resource('v1/fotos{/id}');
+      // this.resource.query()
+      // .then(res => res.json())
+      // .then(lista_fotos => (this.fotos = lista_fotos, err => console.log(err)));
   }
 };
 </script>

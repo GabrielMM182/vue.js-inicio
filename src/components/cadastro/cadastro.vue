@@ -73,12 +73,10 @@ export default {
       this.service.cadastra(this.foto)
         .then(() => this.foto = new Foto(), err => console.log(err));
     },
-
-    create() {
+  },
+    created() {
       this.service = new FotoService(this.$resource);
     }
-
-  }
 
 };
 </script>

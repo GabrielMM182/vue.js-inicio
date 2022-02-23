@@ -32,7 +32,7 @@
               tipo="button"
               rotulo="REMOVER"
               slot="botao"
-              @botaoAtivado="remove($event, foto)"
+              @botaoAtivado="remove(foto)"
               :confirmacao="true"
               estilo="perigo"
             />
@@ -66,9 +66,6 @@ export default {
   },
 
   methods: {
-
-
-
     remove(foto) {
 
       this.service.apaga(foto._id)
@@ -113,6 +110,7 @@ export default {
   created() {
 
     this.service = new FotoService(this.$resource);
+
     this.service.lista()
       .then(lista_fotos => (this.fotos = lista_fotos, err => console.log(err)));
 

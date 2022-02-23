@@ -21,23 +21,25 @@ export default {
 
   },
 
-  methods: {
-    disparaAcao() {
-      if(this.confimacao) {
-        if(confirm('Confirma operação?')) {
-          this.$emit('botaoAtivado', new Date());
+    methods: {
+
+        disparaAcao() {
+
+            if(this.confirmacao) {
+                if(confirm('Confirma operação?')) {
+                    this.$emit('botaoAtivado');
+                }
+                return;
+            }
+            this.$emit('botaoAtivado');
         }
-        return;
-      }
-      this.$emit('botaoAtivado');
-    }
-  },
+    },
 
   computed: {
 
     estiloBotao() {
 
-      if(this.estilo == 'padrao') return 'botao-padrao'
+      if(this.estilo == 'padrao' || !this.estilo) return 'botao-padrao'
       if(this.estilo == 'perigo') return 'botao-perigo'
 
     }

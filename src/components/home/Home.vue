@@ -23,11 +23,13 @@
               :url="foto.url"
               :titulo="foto.titulo"
               slot="painel"
-
             />
-            <!-- <meu-botao :tipo="button" :rotulo="remover" slot="botao"/> -->
           </meu-painel>
           <div>
+            <router-link :to="{ name: 'altera', params: { id: foto._id } }">
+              <meu-botao tipo="button" rotulo="EDITAR"></meu-botao>
+            </router-link>
+
             <meu-botao
               tipo="button"
               rotulo="REMOVER"
@@ -67,32 +69,14 @@ export default {
 
   methods: {
     remove(foto) {
-
-      this.service.apaga(foto._id)
-        .then(() => {
-            let indice = this.fotos.indexOf(foto);
-            this.fotos.splice(indice, 1);
-            this.mensagem = 'Foto removida com sucesso'
-          },
-          err => {
-            this.mensagem = 'Não foi possível remover a foto';
-            console.log(err);
-          }
-        )
-
-      // this.$http
-      //   .delete(`v1/fotos/${foto._id}`)
-      //   .then(
-      //     () => {
-      //       let indice = this.fotos.indexOf(foto); // acha a posição da foto na lista
-      //       this.fotos.splice(indice, 1); // a instrução altera o array
-      //       this.mensagem = 'Foto removida com sucesso'
-      //     },
-      //     err => {
-      //       this.mensagem = 'Não foi possível remover a foto';
-      //       console.log(err);
-      //     }
-      //   )
+      this.service.apaga(foto._id).then(
+        () => {
+          let indice = this.fotos.indexOf(foto); // acha a posição da foto na lista
+          this.fotos.splice(indice, 1); // a instrução altera o array
+          this.mensagem = "Foto removida com sucesso";
+        },
+        err => (this.mensagem = err.message)
+      );
     }
   },
 
@@ -108,23 +92,12 @@ export default {
   },
 
   created() {
-
     this.service = new FotoService(this.$resource);
 
-    this.service.lista()
-      .then(lista_fotos => (this.fotos = lista_fotos, err => console.log(err)));
-
-
-    // primeira maneira com http sem o service
-    // this.$http.get('v1/fotos')
-      // .then(res => res.json())
-      // .then(lista_fotos => (this.fotos = lista_fotos, err => console.log(err)));
-
-    // segunda maneira com resource sem o service
-      // this.resource = this.$resource('v1/fotos{/id}');
-      // this.resource.query()
-      // .then(res => res.json())
-      // .then(lista_fotos => (this.fotos = lista_fotos, err => console.log(err)));
+    this.service.lista().then(
+      lista_fotos => (this.fotos = lista_fotos),
+      err => (this.mensagem = err.message)
+    );
   }
 };
 </script>

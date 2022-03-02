@@ -7,8 +7,10 @@ import {routes} from './routes';
 
 import './directives/Transform';
 import VeeValidate from 'vee-validate';
-
 import msgPtBr  from './pt_BR';
+
+import 'bootstrap/dist/css/bootstrap.css';
+
 Vue.use(VueRouter);
 
 // adicionando a propriedade mode com o valor history.

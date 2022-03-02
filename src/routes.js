@@ -1,7 +1,9 @@
 // alurapic/src/routes.js
 
+// const Cadastro = () => System.import('./components/cadastro/cadastro.vue')
+
 import Home from './components/home/Home.vue';
-import Cadastro from './components/cadastro/Cadastro.vue';
+import Cadastro from './components/cadastro/cadastro.vue';
 
 export const routes = [
 

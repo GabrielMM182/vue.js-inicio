@@ -6,7 +6,9 @@ import VueRouter from 'vue-router';
 import {routes} from './routes';
 
 import './directives/Transform';
+import VeeValidate from 'vee-validate';
 
+import msgPtBr  from './pt_BR';
 Vue.use(VueRouter);
 
 // adicionando a propriedade mode com o valor history.
@@ -18,6 +20,11 @@ const router = new VueRouter({
 
 Vue.use(VueResource);
 Vue.http.options.root = 'http://localhost:3000';
+
+Vue.use(VeeValidate, {
+  locale: "pt_BR",
+  dictionary: { pt_BR: msgPtBr }
+});
 
 new Vue({
   el: '#app',
